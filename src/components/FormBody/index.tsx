@@ -1,12 +1,19 @@
 import { Envelope, Lock } from "phosphor-react";
+import { FormEvent } from "react";
 import { Button } from "../DesignSystem/Button";
 import { Checkbox } from "../DesignSystem/Checkbox";
 import { Text } from "../DesignSystem/Text";
 import { TextInput } from "../DesignSystem/TextInput";
 
-export function FormBody() {
+interface IFormBody {
+  handleSignIn: (e: FormEvent) => void;
+  isUserSignedIn: boolean;
+}
+
+export function FormBody({ handleSignIn, isUserSignedIn }: IFormBody) {
   return (
-    <form className="flex flex-col gap-4 items-stretch w-full max-w-[400px] mt-10">
+    <form onSubmit={handleSignIn} className="flex flex-col gap-4 items-stretch w-full max-w-[400px] mt-10">
+      {isUserSignedIn && <Text>Usuario logado!</Text>}
       <label htmlFor="email" className="flex flex-col gap-3">
         <Text className="font-semibold">Endereço de email</Text>
         <TextInput.Root>
@@ -31,7 +38,7 @@ export function FormBody() {
         <Text size="sm" className="text-gray-200">Lembrar de mim por 30 dias</Text>
       </label>
 
-      <Button type="submit" className="mt-4">Entrar na plataforma</Button>
+      <Button type="submit" role="button" className="mt-4">Entrar na plataforma</Button>
     </form>
   )
 }
